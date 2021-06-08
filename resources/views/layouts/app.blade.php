@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -40,11 +40,15 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('post') }}">Posts</a>
-                        </li>
-                        @guest
+
+                        @if (\Auth::check())
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('post') }}">Posts</a>
+                            </li>
+                        @endif
+
+                        @guest
+                            <li class="nav-ite  m">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
@@ -57,12 +61,11 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}">
                                     {{ __('Logout') }}
                                     ({{ \Auth::user()->name }})
-                                    ({{  session('user-state')['email'] }})
                                 </a>
                             </li>
                         @endguest
                     </ul>
-                </div>
+            </div>
             </div>
         </nav>
 
@@ -70,5 +73,6 @@
             @yield('content')
         </main>
     </div>
+</script>
 </body>
 </html>

@@ -1,0 +1,46 @@
+.my-active span{
+    background-color: #5cb85c !important;
+    color: white !important;
+    border-color: #5cb85c !important;
+}
+.frmSearch{
+    position: relative;
+}
+.suggesstion-box{
+    position: absolute;
+    overflow-y: scroll;
+    z-index: 99;
+    background: white;
+    width: 100%;
+    max-height: 100px;
+}
+.suggesstion-box ul{
+    padding-left: 0px;
+}
+.suggesstion-box li{
+    list-style-type: none;
+    padding-left: 15px;
+}
+.suggesstion-box li:hover{
+    background: #004188;
+    color: white;
+    cursor: pointer
+}
+table {
+font-family: arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
+}
+
+td, th {
+border: 1px solid #dddddd;
+text-align: left;
+padding: 8px;
+}
+
+tr:nth-child(even) {
+background-color: #dddddd;
+}
+.column-name:hover, .column-content:hover{
+    cursor: pointer;
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EmployeeAuthenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,10 +34,17 @@ Route::post('forget-password', 'Auth\ForgotPasswordController@postEmail');
 Route::get('reset-password/{token}', 'Auth\ResetPasswordController@getPassword');
 Route::post('reset-password', 'Auth\ResetPasswordController@updatePassword');
 
-Route::get('post', 'PostController@index')->name('post');
-Route::get('post/edit/{id}', 'PostController@edit')->name('post.edit');
-Route::post('post/edit/{id}', 'PostController@update')->name('post.update');
-Route::get('post/create', 'PostController@create')->name('post.create');
-Route::post('post/create', 'PostController@store')->name('post.store');
-Route::post('post/filter', 'PostController@filter')->name('post.filter');
-Route::post('post/{id}', 'PostController@destroy')->name('post.delete');
+
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'post/'],function ()
+{
+    Route::get('/', 'PostController@index')->name('post');
+    Route::get('/edit/{id}', 'PostController@edit')->name('post.edit');
+    Route::post('/edit/{id}', 'PostController@update')->name('post.update');
+    Route::get('/create', 'PostController@create')->name('post.create');
+    Route::post('/create', 'PostController@store')->name('post.store');
+    Route::get('/filter', 'PostController@filter')->name('post.filter');
+    Route::get('/autosearch', 'PostController@autoSearch')->name('post.autosearch');
+    Route::post('/{id}', 'PostController@destroy')->name('post.delete');
+    Route::get('/exportCsv', 'PostController@exportCsv')->name('post.export');
+});

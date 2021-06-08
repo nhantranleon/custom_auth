@@ -2,29 +2,25 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     //
     public function login()
     {
-
       return view('auth.login');
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(LoginRequest $request)
     {
-      $request->validate([
-          'email' => 'required|string|email',
-          'password' => 'required|string',
-      ]);
-
       $credentials = $request->only('email', 'password');
 
       if (Auth::attempt($credentials)) {
-          session(['user-state' => $credentials]);
+          session(['users_auth' => $credentials]);
           return redirect()->intended('home');
       }
 
@@ -33,7 +29,7 @@ class LoginController extends Controller
 
     public function logout() {
       Auth::logout();
-
+      session()->forget('users_auth');
       return redirect('login');
     }
 
